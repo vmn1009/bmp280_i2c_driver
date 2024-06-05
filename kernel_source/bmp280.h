@@ -170,18 +170,120 @@ typedef struct {
 } BMP280_HandleTypedef;
 
 // Function prototypes
-static int etx_open(struct inode *inode, struct file *file); // Open function
-static int etx_release(struct inode *inode, struct file *file); // Release function
-static ssize_t etx_read(struct file *filp, char __user *buf, size_t len, loff_t *off); // Read function
-static ssize_t etx_write(struct file *filp, const char *buf, size_t len, loff_t *off); // Write function
-static long etx_ioctl(struct file *file, unsigned int cmd, unsigned long arg); // IOCTL function
+/**
+ * @brief Open function for the ETX driver.
+ *
+ * This function is called when the device is opened.
+ *
+ * @param inode Pointer to the inode structure.
+ * @param file Pointer to the file structure.
+ * @return Returns 0 on success, or a negative error code on failure.
+ */
+static int etx_open(struct inode *inode, struct file *file);
 
-void read_raw(BMP280_HandleTypedef *bmp280, int reg); // Function to read raw data from register
-void bmp280_init_default_params(BMP280_HandleTypedef *bmp280); // Initialize default parameters
-static void read_calibration_data(BMP280_HandleTypedef *bmp280); // Read calibration data
+/**
+ * @brief Release function for the ETX driver.
+ *
+ * This function is called when the device is closed.
+ *
+ * @param inode Pointer to the inode structure.
+ * @param file Pointer to the file structure.
+ * @return Returns 0 on success, or a negative error code on failure.
+ */
+static int etx_release(struct inode *inode, struct file *file);
 
-static bool bmp280_read_reg_value_8bit(BMP280_HandleTypedef *bmp280, uint8_t addr, uint8_t *data); // Read 8-bit register value
-static bool bmp280_write_reg_value_8bit(BMP280_HandleTypedef *bmp280, uint8_t addr, uint8_t data); // Write 8-bit register value
-static int bmp280_read_reg_value_16bit(BMP280_HandleTypedef *bmp280, uint8_t addr, uint16_t *data); // Read 16-bit register value
+/**
+ * @brief Read function for the ETX driver.
+ *
+ * This function is called when data is read from the device.
+ *
+ * @param filp Pointer to the file structure.
+ * @param buf Pointer to the user buffer.
+ * @param len Length of the data to read.
+ * @param off Pointer to the current file offset.
+ * @return Returns the number of bytes read, or a negative error code on failure.
+ */
+static ssize_t etx_read(struct file *filp, char __user *buf, size_t len, loff_t *off);
+
+/**
+ * @brief Write function for the ETX driver.
+ *
+ * This function is called when data is written to the device.
+ *
+ * @param filp Pointer to the file structure.
+ * @param buf Pointer to the data buffer.
+ * @param len Length of the data to write.
+ * @param off Pointer to the current file offset.
+ * @return Returns the number of bytes written, or a negative error code on failure.
+ */
+static ssize_t etx_write(struct file *filp, const char *buf, size_t len, loff_t *off);
+
+/**
+ * @brief IOCTL function for the ETX driver.
+ *
+ * This function is called to perform device-specific operations.
+ *
+ * @param file Pointer to the file structure.
+ * @param cmd IOCTL command.
+ * @param arg Argument for the IOCTL command.
+ * @return Returns 0 on success, or a negative error code on failure.
+ */
+static long etx_ioctl(struct file *file, unsigned int cmd, unsigned long arg);
+
+/**
+ * @brief Function to read raw data from a register of the BMP280 sensor.
+ *
+ * @param bmp280 Pointer to the BMP280 handle structure.
+ * @param reg Register address to read from.
+ * @return No return value.
+ */
+void read_raw(BMP280_HandleTypedef *bmp280, int reg);
+
+/**
+ * @brief Function to initialize default parameters for the BMP280 sensor.
+ *
+ * @param bmp280 Pointer to the BMP280 handle structure.
+ * @return No return value.
+ */
+void bmp280_init_default_params(BMP280_HandleTypedef *bmp280);
+
+/**
+ * @brief Function to read calibration data from the BMP280 sensor.
+ *
+ * @param bmp280 Pointer to the BMP280 handle structure.
+ * @return No return value.
+ */
+static void read_calibration_data(BMP280_HandleTypedef *bmp280);
+
+/**
+ * @brief Function to read an 8-bit register value from the BMP280 sensor.
+ *
+ * @param bmp280 Pointer to the BMP280 handle structure.
+ * @param addr Register address to read from.
+ * @param data Pointer to store the read value.
+ * @return Returns true if successful, false otherwise.
+ */
+static bool bmp280_read_reg_value_8bit(BMP280_HandleTypedef *bmp280, uint8_t addr, uint8_t *data);
+
+/**
+ * @brief Function to write an 8-bit register value to the BMP280 sensor.
+ *
+ * @param bmp280 Pointer to the BMP280 handle structure.
+ * @param addr Register address to write to.
+ * @param data Value to write.
+ * @return Returns true if successful, false otherwise.
+ */
+static bool bmp280_write_reg_value_8bit(BMP280_HandleTypedef *bmp280, uint8_t addr, uint8_t data);
+
+/**
+ * @brief Function to read a 16-bit register value from the BMP280 sensor.
+ *
+ * @param bmp280 Pointer to the BMP280 handle structure.
+ * @param addr Register address to read from.
+ * @param data Pointer to store the read value.
+ * @return Returns 0 on success, or a negative error code on failure.
+ */
+static int bmp280_read_reg_value_16bit(BMP280_HandleTypedef *bmp280, uint8_t addr, uint16_t *data);
+
 
 #endif // __BMP280_H__
