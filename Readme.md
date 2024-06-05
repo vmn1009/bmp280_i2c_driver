@@ -2,6 +2,12 @@ Group: 8
 Date: 20/5/2024  
 Description: User manual for how can use bmp280 library
 
+##### Group Team consist of:
++ Vo Thanh Minh Nhat - 21146132
++ Le Khac Chan Nguyen - 21146126
++ Nguyen Huu Minh - 21146129
+##### Instructors: Bui Ha Duc
+
 # Table of contents
 
 * [Introduce bmp280 sensor](#Introduce-bmp280-sensor)
